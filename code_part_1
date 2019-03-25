@@ -1,0 +1,87 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Mar 10 17:28:13 2019
+
+@author: Suleyman
+SAFE MOD MACHİNE LEARNİNG
+
+"""
+
+import sys
+import warnings
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+    
+    
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+
+### data import ###
+datas=pd.read_csv("safemode1.csv")
+
+### Data Preprocessing ###
+suspension=datas.iloc[:,0:1].values
+tire_type=datas.iloc[:,1:2].values
+esp=datas.iloc[:,2:3].values
+tr=datas.iloc[:,3:4].values
+ac=datas.iloc[:,4:5].values
+cog=datas.iloc[:,5:6].values
+gc=datas.iloc[:,6:7].values
+ev=datas.iloc[:,7:8].values
+t=datas.iloc[:,8:9].values
+sm=datas.iloc[:,9:10].values
+
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+suspension[:,0] = le.fit_transform(suspension[:,0])
+tire_type[:,0] = le.fit_transform(tire_type[:,0])
+esp[:,0] = le.fit_transform(esp[:,0])
+cog[:,0] = le.fit_transform(cog[:,0])
+gc[:,0] = le.fit_transform(gc[:,0])
+ev[:,0] = le.fit_transform(ev[:,0])
+
+
+from sklearn.preprocessing import OneHotEncoder
+ohe = OneHotEncoder()
+suspension=ohe.fit_transform(suspension).toarray()
+tire_type=ohe.fit_transform(tire_type).toarray()
+esp=ohe.fit_transform(esp).toarray()
+cog=ohe.fit_transform(cog).toarray()
+gc=ohe.fit_transform(gc).toarray()
+ev=ohe.fit_transform(ev).toarray()
+
+
+data1= pd.DataFrame(data = suspension , index = range(45), columns=['hard','soft',])
+data2= pd.DataFrame(data = tire_type , index = range(45), columns=['normal','winter',])
+data3= pd.DataFrame(data =esp , index = range(45), columns=['close','open',])
+data4= pd.DataFrame(data =cog , index = range(45), columns=['below','above',])
+data5= pd.DataFrame(data =gc , index = range(45), columns=['wet','dry','damp'])
+data6= pd.DataFrame(data =ev , index = range(45), columns=['clear','cloudily',])
+data7= pd.DataFrame(data = tr , index = range(45), columns=['Torsion Resistance',])
+data8= pd.DataFrame(data = ac , index = range(45), columns=['aerodynamic coefficient',])
+data9= pd.DataFrame(data = t , index = range(45), columns=['temperature'])
+safemode= pd.DataFrame(data = sm , index = range(45), columns=['safe mode'])
+
+s1=pd.concat([data1,data2,data3,data7,data8,data6,data4,data5,data9],axis=1)
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test= train_test_split(s1,sonuc3,test_size=0.33,random_state=0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
