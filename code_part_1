@@ -16,6 +16,7 @@ if not sys.warnoptions:
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import r2_score
 
 
 ### data import ###
@@ -67,14 +68,298 @@ safemode= pd.DataFrame(data = sm , index = range(45), columns=['safe mode'])
 
 s1=pd.concat([data1,data2,data3,data7,data8,data6,data4,data5,data9],axis=1)
 
+
+
+#verilerin egitim ve test icin bolunmesi
 from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test= train_test_split(s1,safemode,test_size=0.33,random_state=0)
+x_train, x_test,y_train,y_test = train_test_split(s1,safemode,test_size=0.33, random_state=0)
 
 
+#Linear regression
+
+from sklearn.linear_model import LinearRegression
+regressor= LinearRegression()
+regressor.fit(x_train,y_train)
+y_pred = regressor.predict(x_test)
 
 
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=s1,axis=1)
+x_l= s1.iloc[:,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
 
 
+###############
+p1=s1.iloc[:,0:3]
+p2=s1.iloc[:,4:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:3]
+x2=x_train.iloc[:,4:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:3]
+x4=x_test.iloc[:,4:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred1 = regressor.predict(x_test)
+
+###############
+
+
+###############
+p1=s1.iloc[:,0:2]
+p2=s1.iloc[:,3:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7,8,9,10,11,12,13]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:2]
+x2=x_train.iloc[:,3:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:2]
+x4=x_test.iloc[:,3:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred2 = regressor.predict(x_test)
+
+###############
+
+###############
+p1=s1.iloc[:,0:10]
+p2=s1.iloc[:,11:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7,8,9,10,11,12]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:10]
+x2=x_train.iloc[:,11:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:10]
+x4=x_test.iloc[:,11:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred3 = regressor.predict(x_test)
+
+###############
+
+###############
+p1=s1.iloc[:,0:7]
+p2=s1.iloc[:,8:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7,8,9,10,11]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:7]
+x2=x_train.iloc[:,8:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:7]
+x4=x_test.iloc[:,8:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred4 = regressor.predict(x_test)
+
+###############
+
+###############
+p1=s1.iloc[:,0:1]
+p2=s1.iloc[:,2:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7,8,9,10]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:1]
+x2=x_train.iloc[:,2:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:1]
+x4=x_test.iloc[:,2:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred5 = regressor.predict(x_test)
+
+###############
+
+###############
+
+p1=s1.iloc[:,0:6]
+p2=s1.iloc[:,7:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7,8,9]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:6]
+x2=x_train.iloc[:,7:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:6]
+x4=x_test.iloc[:,7:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred6 = regressor.predict(x_test)
+
+###############
+
+###############
+
+p1=s1.iloc[:,0:9]
+p2=s1.iloc[:,10:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7,8]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:9]
+x2=x_train.iloc[:,10:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:9]
+x4=x_test.iloc[:,10:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred7 = regressor.predict(x_test)
+
+###############
+
+###############
+
+p1=s1.iloc[:,0:7]
+p2=s1.iloc[:,8:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6,7]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:7]
+x2=x_train.iloc[:,8:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:7]
+x4=x_test.iloc[:,8:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred8 = regressor.predict(x_test)
+clear_data=x_train
+###############
+
+###############
+
+p1=s1.iloc[:,0:7]
+p2=s1.iloc[:,8:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5,6]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:7]
+x2=x_train.iloc[:,8:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:7]
+x4=x_test.iloc[:,8:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred9 = regressor.predict(x_test)
+
+###############
+
+###############
+
+p1=s1.iloc[:,0:1]
+p2=s1.iloc[:,2:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4,5]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:1]
+x2=x_train.iloc[:,2:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:1]
+x4=x_test.iloc[:,2:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred10 = regressor.predict(x_test)
+
+###############
+
+###############
+
+p1=s1.iloc[:,0:2]
+p2=s1.iloc[:,3:]
+t1=pd.concat([p1,p2],axis=1)
+
+import statsmodels.formula.api as sm
+x= np.append(arr=np.ones((45,1)).astype(int),values=t1,axis=1)
+x_l= t1.iloc[:,[0,1,2,3,4]].values
+r=sm.OLS(endog=safemode,exog=x_l).fit()
+print(r.summary())
+
+x1=x_train.iloc[:,0:2]
+x2=x_train.iloc[:,3:]
+x_train=pd.concat([x1,x2],axis=1)
+
+x3=x_test.iloc[:,0:2]
+x4=x_test.iloc[:,3:]
+x_test=pd.concat([x3,x4],axis=1)
+
+regressor.fit(x_train,y_train)
+y_pred11= regressor.predict(x_test)
+
+###############
 
 
 
